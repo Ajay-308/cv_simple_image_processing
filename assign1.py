@@ -2,10 +2,10 @@ import streamlit as st
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
-from PIL import ImageFont
+
 
 def main():
-    st.title("AJAY Image Processing App")
+    st.title("Image Processing App")
 
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
@@ -30,15 +30,16 @@ def main():
             threshold = st.slider("Threshold", 0, 255, 128)
             threshold_y = st.slider("threshold y" , 0,255,128)
             _, binary_image = cv2.threshold(cv2.cvtColor(opencv_image, cv2.COLOR_BGR2GRAY), threshold, threshold_y, cv2.THRESH_BINARY)
+
             st.image(binary_image, caption="Binary Image", use_column_width=True)
         elif option == "Brightness & Contrast":
             brightness = st.slider("Brightness", 0.0, 2.0, 1.0)
             contrast = st.slider("Contrast", 0.0, 2.0, 1.0)
             adjusted_image = cv2.convertScaleAbs(opencv_image, alpha=contrast, beta=brightness)
-            st.image(adjusted_image, caption="After Adjustment", use_column_width=True)
+            st.image(adjusted_image, caption="Adjusted Image", use_column_width=True)
         elif option == "Symbols":
             draw = ImageDraw.Draw(image)
-            shape = st.sidebar.selectbox("Choose Any one shape", ["Line", "Rectangle", "Circle", "Text"])
+            shape = st.sidebar.selectbox("Choose a shape", ["Line", "Rectangle", "Circle", "Text"])
             
             if shape == "Line":
                 start_point = tuple(st.text_input("Start Point (x, y)", value="0, 0").split(','))
@@ -52,6 +53,12 @@ def main():
                  #--> line abhi choti hai to mai usko scale karunga start , max value , default value
                 scale = st.slider("line scale",1,10,1)
                 draw.rectangle([int(top_left[0]), int(top_left[1]), int(bottom_right[0]), int(bottom_right[1])], outline="blue", width=scale)
+            elif shape == "Circle":
+                center = tuple(st.text_input("Center (x, y)", value="25, 25").split(','))
+                radius = st.number_input("Radius", min_value=1, value=10)
+                 #--> line abhi choti hai to mai usko scale karunga start , max value , default value
+                scale = st.slider("line scale",1,10,1)
+                draw.ellipse([int(center[0]) - radius, int(center[1]) - radius, int(center[0]) + radius, int(center[1]) + radius], outline="green", width=scale)
             elif shape == "Text":
                 image_np = np.array(image)
                 text = st.text_input("Enter text", "Hello, Streamlit!")
@@ -59,8 +66,7 @@ def main():
                 scale = st.slider("Text scale", 1, 20, 1)  # Increased the range for larger font sizes
                 cv2.putText(image_np, text, position, cv2.FONT_HERSHEY_SIMPLEX, scale, (255, 0, 255), thickness=2)
                 image = Image.fromarray(image_np)
-            
-            st.image(image, caption="Annotated Image", use_column_width=True)
-
+                
+            st.image(image, caption='Symbols', use_column_width=True)
 if __name__ == "__main__":
     main()
