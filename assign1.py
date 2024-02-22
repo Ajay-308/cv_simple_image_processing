@@ -19,7 +19,7 @@ def main():
         st.image(image, caption="Original Image", use_column_width=True)
 
         #  options
-        option = st.sidebar.selectbox("Choose an option", ["Original", "Grayscale", "Binary", "Brightness & Contrast", "Annotation"])
+        option = st.sidebar.selectbox("Choose an option", ["Original", "Grayscale", "Binary", "Brightness & Contrast", "Symbols"])
 
         if option == "Original":
             st.image(image, caption="Original Image", use_column_width=True) # --> column width used to fit the image
