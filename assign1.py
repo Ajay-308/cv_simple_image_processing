@@ -52,21 +52,14 @@ def main():
                  #--> line abhi choti hai to mai usko scale karunga start , max value , default value
                 scale = st.slider("line scale",1,10,1)
                 draw.rectangle([int(top_left[0]), int(top_left[1]), int(bottom_right[0]), int(bottom_right[1])], outline="blue", width=scale)
-            elif shape == "Circle":
-                center = tuple(st.text_input("Center (x, y)", value="25, 25").split(','))
-                radius = st.number_input("Radius", min_value=1, value=10)
-                 #--> line abhi choti hai to mai usko scale karunga start , max value , default value
-                scale = st.slider("line scale",1,10,1)
-                draw.ellipse([int(center[0]) - radius, int(center[1]) - radius, int(center[0]) + radius, int(center[1]) + radius], outline="green", width=scale)
-            elif shape == "Text":
-                text = st.text_input("Enter text", "MY Name Is AJAY, I gonna run this matrix !")
-                position = tuple(st.text_input("Position (x, y)", value="10, 10").split(','))
-                 #--> line abhi choti hai to mai usko scale karunga start , max value , default value
-                scale = st.slider("Font Size Scale", 1, 10, 1)
-                original_font_size = 12
-                scaled_font_size = int(original_font_size * scale)
-                draw.text((int(position[0]), int(position[1])), text, fill="purple", font=ImageFont.truetype("arial.ttf", scaled_font_size))
-
+           elif shape == "Text":
+                image_np = np.array(image)
+                text = st.text_input("Enter text", "Hello, Streamlit!")
+                position = tuple(map(int, st.text_input("Position (x, y)", value="10, 10").split(',')))
+                scale = st.slider("Text scale", 1, 20, 1)  # Increased the range for larger font sizes
+                cv2.putText(image_np, text, position, cv2.FONT_HERSHEY_SIMPLEX, scale, (255, 0, 255), thickness=2)
+                image = Image.fromarray(image_np)
+            
             st.image(image, caption="Annotated Image", use_column_width=True)
 
 if __name__ == "__main__":
