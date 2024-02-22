@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw
 
 
 def main():
-    st.title("Image Processing App")
+    st.title("AJAY Image Processing App")
 
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
@@ -28,7 +28,8 @@ def main():
             st.image(grayscale_image, caption="After Grayscale Image", use_column_width=True)
         elif option == "Binary":
             threshold = st.slider("Threshold", 0, 255, 128)
-            _, binary_image = cv2.threshold(cv2.cvtColor(opencv_image, cv2.COLOR_BGR2GRAY), threshold, 255, cv2.THRESH_BINARY)
+             threshold_y = st.slider("threshold y" , 0,255,128)
+            _, binary_image = cv2.threshold(cv2.cvtColor(opencv_image, cv2.COLOR_BGR2GRAY), threshold, threshold_y, cv2.THRESH_BINARY)
             st.image(binary_image, caption="Binary Image", use_column_width=True)
         elif option == "Brightness & Contrast":
             brightness = st.slider("Brightness", 0.0, 2.0, 1.0)
