@@ -2,7 +2,7 @@ import streamlit as st
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
-
+from PIL import ImageFont
 
 def main():
     st.title("AJAY Image Processing App")
@@ -62,8 +62,10 @@ def main():
                 text = st.text_input("Enter text", "MY Name Is AJAY, I gonna run this matrix !")
                 position = tuple(st.text_input("Position (x, y)", value="10, 10").split(','))
                  #--> line abhi choti hai to mai usko scale karunga start , max value , default value
-                scale = st.slider("line scale",1,10,1)
-                draw.text((int(position[0]), int(position[1])), text, fill="purple" ,stroke_width=scale)
+                scale = st.slider("Font Size Scale", 1, 10, 1)
+                original_font_size = 12
+                scaled_font_size = int(original_font_size * scale)
+                draw.text((int(position[0]), int(position[1])), text, fill="purple", font=ImageFont.truetype("arial.ttf", scaled_font_size))
 
             st.image(image, caption="Annotated Image", use_column_width=True)
 
