@@ -52,7 +52,7 @@ def main():
                  #--> line abhi choti hai to mai usko scale karunga start , max value , default value
                 scale = st.slider("line scale",1,10,1)
                 draw.rectangle([int(top_left[0]), int(top_left[1]), int(bottom_right[0]), int(bottom_right[1])], outline="blue", width=scale)
-           elif shape == "Text":
+            elif shape == "Text":
                 image_np = np.array(image)
                 text = st.text_input("Enter text", "Hello, Streamlit!")
                 position = tuple(map(int, st.text_input("Position (x, y)", value="10, 10").split(',')))
