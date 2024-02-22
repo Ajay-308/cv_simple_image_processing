@@ -28,7 +28,7 @@ def main():
             st.image(grayscale_image, caption="After Grayscale Image", use_column_width=True)
         elif option == "Binary":
             threshold = st.slider("Threshold", 0, 255, 128)
-             threshold_y = st.slider("threshold y" , 0,255,128)
+            threshold_y = st.slider("threshold y" , 0,255,128)
             _, binary_image = cv2.threshold(cv2.cvtColor(opencv_image, cv2.COLOR_BGR2GRAY), threshold, threshold_y, cv2.THRESH_BINARY)
             st.image(binary_image, caption="Binary Image", use_column_width=True)
         elif option == "Brightness & Contrast":
